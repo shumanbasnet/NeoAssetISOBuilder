@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NeoAsset Diagnostic & Secure Erase</title>
+  <style>
+    body { font-family: sans-serif; background: #f0f0f0; padding: 2em; }
+    h1 { color: #2a2a2a; }
+    .section { margin: 1em 0; padding: 1em; background: white; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    label { display: block; margin-top: 1em; }
+    input, textarea { width: 100%; padding: 0.5em; }
+    button { margin-top: 1em; padding: 0.7em; background: #007bff; color: white; border: none; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h1>NeoAsset Diagnostic & Secure Erase</h1>
+  <div class="section">
+    <h2>System Information</h2>
+    <pre id="sysinfo">Loading...</pre>
+  </div>
+  <div class="section">
+    <h2>Secure Erase</h2>
+    <button onclick="startErase()">Start Secure Erase</button>
+  </div>
+  <div class="section">
+    <h2>Report</h2>
+    <label for="ssn">SSN:</label>
+    <input type="text" id="ssn">
+    <label for="grn">GRN:</label>
+    <input type="text" id="grn">
+    <button onclick="generatePDF()">Generate PDF Report</button>
+    <pre id="reportstatus"></pre>
+  </div>
+  <script>
+    function startErase() {
+      fetch('start_erase.sh').then(() => alert("Erase command triggered"));
+    }
+    function generatePDF() {
+      const ssn = document.getElementById("ssn").value;
+      const grn = document.getElementById("grn").value;
+      fetch(`generate_report.sh?ssn=${ssn}&grn=${grn}`)
+        .then(() => document.getElementById("reportstatus").textContent = "Report generated.");
+    }
+    fetch('sysinfo.txt')
+      .then(response => response.text())
+      .then(data => document.getElementById("sysinfo").textContent = data);
+  </script>
+</body>
+</html>

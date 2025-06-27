@@ -1,0 +1,1 @@
+Run inject-dashboard.ps1 with proper WIM path. Requires admin PowerShell.

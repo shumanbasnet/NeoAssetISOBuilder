@@ -1,0 +1,3 @@
+CPU: Intel i7
+RAM: 16GB
+Storage: 512GB SSD
