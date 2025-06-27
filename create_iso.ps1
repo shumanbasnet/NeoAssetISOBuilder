@@ -29,6 +29,9 @@ Copy-Item -Path (Join-Path $srcRoot 'IHV\*') -Destination (Join-Path $mountDir '
 Copy-Item -Path (Join-Path $srcRoot 'Reports\*') -Destination (Join-Path $mountDir 'Program Files\NeoAsset\Reports') -Recurse -Force
 Copy-Item -Path (Join-Path $srcRoot 'WinPE_Files\startnet.cmd') -Destination (Join-Path $mountDir 'Windows\System32\startnet.cmd') -Force
 
+# Inject dashboard files into the mounted WinPE image
+& "$ScriptDir\inject-dashboard.ps1" -MountDir $mountDir
+
 & dism /Unmount-Wim /MountDir:$mountDir /Commit
 
 $oscdimg = Join-Path $adkBase 'Deployment Tools\amd64\Oscdimg\oscdimg.exe'

@@ -1,17 +1,20 @@
+# Copy dashboard files into a mounted WinPE image
 param(
-    [string]$WimPath,
-    [string]$MountPath = "C:\WinPE_Mount"
+    [Parameter(Mandatory)]
+    [string]$MountDir
 )
 
-Write-Host "Mounting $WimPath to $MountPath"
-dism /Mount-Wim /WimFile:$WimPath /index:1 /MountDir:$MountPath
+# Source directory containing dashboard files
+$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$DashboardSrc = Join-Path $ScriptDir 'Dashboard'
 
-Write-Host "Copying Assets..."
-Copy-Item -Recurse -Force ".\Assets" "$MountPath\NeoAsset"
+# Destination path inside the mounted image
+$DashDest = Join-Path $MountDir 'Program Files\NeoAsset\Dashboard'
 
-Write-Host "Replacing startnet.cmd..."
-$cmdPath = "$MountPath\Windows\System32\startnet.cmd"
-Set-Content -Path $cmdPath -Value "@echo off`nwpeinit`nstart msedge X:\NeoAsset\Assets\dashboard.html"
+# Create destination directory if it does not exist
+if (-not (Test-Path $DashDest)) {
+    New-Item -ItemType Directory -Path $DashDest -Force | Out-Null
+}
 
-Write-Host "Unmounting and Committing..."
-dism /Unmount-Wim /MountDir:$MountPath /Commit
+# Copy all dashboard content
+Copy-Item -Path (Join-Path $DashboardSrc '*') -Destination $DashDest -Recurse -Force
