@@ -1,0 +1,1 @@
+Dummy content for NeoAssetISOBuilder/universal_erase.bat
