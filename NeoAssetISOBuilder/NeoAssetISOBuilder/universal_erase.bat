@@ -7,8 +7,8 @@ if not exist "%LOG_DIR%" mkdir "%LOG_DIR%"
 set LOG_TXT=%LOG_DIR%\erase_report.txt
 set LOG_HTML=%LOG_DIR%\erase_report.html
 
-echo Erase Report > "%LOG_TXT%"
-echo ^<html^><body^><pre^> > "%LOG_HTML%"
+echo NeoAsset Universal Erase Report > "%LOG_TXT%"
+echo ^<html^><body^><pre^>NeoAsset Universal Erase Report^<br/^> > "%LOG_HTML%"
 
 for /f "skip=1 tokens=1,*" %%A in ('wmic diskdrive get Index^,Model 2^>NUL ^| findstr /R "^[0-9]"') do (
     set IDX=%%A

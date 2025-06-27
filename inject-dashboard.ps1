@@ -9,9 +9,13 @@ $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $DashboardSrc = Join-Path $ScriptDir 'Dashboard'
 
 # Destination path inside the mounted image
-$DashDest = Join-Path $MountDir 'Program Files\NeoAsset\Dashboard'
+$neoAssetRoot = Join-Path $MountDir 'Program Files\NeoAsset'
+$DashDest = Join-Path $neoAssetRoot 'Dashboard'
 
 # Create destination directory if it does not exist
+if (-not (Test-Path $neoAssetRoot)) {
+    New-Item -ItemType Directory -Path $neoAssetRoot -Force | Out-Null
+}
 if (-not (Test-Path $DashDest)) {
     New-Item -ItemType Directory -Path $DashDest -Force | Out-Null
 }
