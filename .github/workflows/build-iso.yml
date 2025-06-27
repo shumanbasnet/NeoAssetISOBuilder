@@ -1,0 +1,23 @@
+name: Build WinPE ISO
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Windows ADK
+        run: choco install windows-adk -y
+      - name: Install WinPE Add-on
+        run: choco install windows-adk-winpe -y
+      - name: Build ISO
+        shell: pwsh
+        run: ./create_iso.ps1
+      - name: Upload ISO
+        uses: actions/upload-artifact@v3
+        with:
+          name: NeoAssetISO
+          path: output/NeoAsset_Diagnostic_and_Secure_Erase.iso
