@@ -1,0 +1,1 @@
+X:\Windows\SurfaceDataEraser\IHV\Toshiba\clout.exe --log --serase 0

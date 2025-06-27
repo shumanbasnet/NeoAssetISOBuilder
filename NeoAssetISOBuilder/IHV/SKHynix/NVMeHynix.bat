@@ -1,0 +1,1 @@
+X:\Windows\SurfaceDataEraser\IHV\SKHynix\sknvme11.exe eraseall 0

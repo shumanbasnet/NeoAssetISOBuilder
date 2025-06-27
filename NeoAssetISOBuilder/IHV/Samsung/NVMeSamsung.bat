@@ -1,0 +1,1 @@
+X:\Windows\SurfaceDataEraser\IHV\Samsung\SamsungSecureErase_x64.exe -E 0
